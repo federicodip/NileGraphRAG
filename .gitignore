@@ -5,6 +5,9 @@ data/*
 !data/eval_questions.jsonl
 logs/
 
+# Copyrighted source PDFs (not for distribution)
+vocab/sources/
+
 # FAISS index
 faiss_index/
 
