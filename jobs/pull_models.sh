@@ -4,11 +4,18 @@
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=4
 #SBATCH --gpus=1
+#SBATCH --constraint="GPUMEM80GB|GPUMEM96GB|GPUMEM140GB"
 #SBATCH --partition=lowprio
 #SBATCH --chdir=/home/fdipas/nilegraphrag
 #SBATCH --output=logs/pull-%j.out
 #SBATCH --error=logs/pull-%j.err
 set -e
+
+# Unset HTTP_PROXY globally — it breaks ollama pull (client→server is localhost HTTP)
+unset HTTP_PROXY
+unset http_proxy
+export NO_PROXY=localhost,127.0.0.1
+export no_proxy=localhost,127.0.0.1
 
 module load apptainer
 
@@ -19,8 +26,10 @@ echo "=== Starting Ollama server ==="
 HTTPS_PROXY=http://10.129.62.115:3128 \
     apptainer exec --nv \
     --env OLLAMA_MODELS=$MODELS_DIR \
+    --env HTTPS_PROXY=http://10.129.62.115:3128 \
+    --env NO_PROXY=localhost,127.0.0.1 \
     $CTR_OLLAMA ollama serve &
-sleep 15
+sleep 20
 
 echo "=== Pulling gemma3:27b ==="
 apptainer exec \
