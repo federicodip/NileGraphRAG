@@ -11,6 +11,12 @@
 #SBATCH --error=logs/cot-ab-%j.err
 set -e
 
+# Unset HTTP_PROXY — it breaks ollama client→server communication on localhost
+unset HTTP_PROXY
+unset http_proxy
+export NO_PROXY=localhost,127.0.0.1
+export no_proxy=localhost,127.0.0.1
+
 module load apptainer
 
 CTR_OLLAMA=~/scratch/graphRAG/containers/ollama.sif
@@ -18,17 +24,20 @@ CTR_APP=/scratch/fdipas/tellusgraph/tellusgraph.sif
 MODELS_DIR=/scratch/fdipas/graphRAG/ollama
 
 echo "=== Starting Ollama server ==="
-HTTPS_PROXY=http://10.129.62.115:3128 HTTP_PROXY=http://10.129.62.115:3128 \
+HTTPS_PROXY=http://10.129.62.115:3128 \
     OLLAMA_MAX_LOADED_MODELS=2 \
     apptainer exec --nv \
     --env OLLAMA_MODELS=$MODELS_DIR \
+    --env HTTPS_PROXY=http://10.129.62.115:3128 \
+    --env NO_PROXY=localhost,127.0.0.1 \
     $CTR_OLLAMA ollama serve &
-sleep 15
+sleep 20
 
 echo "=== Verifying models ==="
 apptainer exec \
     --env OLLAMA_MODELS=$MODELS_DIR \
     --env NO_PROXY=localhost,127.0.0.1 \
+    --env no_proxy=localhost,127.0.0.1 \
     $CTR_OLLAMA ollama list
 
 echo "=== Running A/B test ==="
