@@ -24,7 +24,7 @@ set -e
 # ---------------------------------------------------------------
 
 NUM_SHARDS=8
-COT_MODEL="${COT_MODEL:-gemma3:27b}"
+COT_MODEL="gemma3:27b"
 LIMIT_FLAG="${COT_LIMIT:+--limit $COT_LIMIT}"
 
 unset HTTP_PROXY

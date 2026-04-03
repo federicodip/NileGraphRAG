@@ -208,7 +208,7 @@ def run_pipeline(
             }
 
         # Merge original chunk data with COT annotation
-        out_record = {**chunk, "chunk_id": cid, **annotation}
+        out_record = {**chunk, "chunk_id": cid, "cot_model": COT_MODEL, **annotation}
         results_buffer.append(out_record)
         processed += 1
 
