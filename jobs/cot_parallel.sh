@@ -25,6 +25,7 @@ set -e
 
 NUM_SHARDS=8
 COT_MODEL="${COT_MODEL:-gemma3:27b}"
+LIMIT_FLAG="${COT_LIMIT:+--limit $COT_LIMIT}"
 
 unset HTTP_PROXY
 unset http_proxy
@@ -60,6 +61,7 @@ apptainer exec \
         --vocab vocab/ecology_v01.yaml \
         --batch-size 50 \
         --shard ${SLURM_ARRAY_TASK_ID} \
-        --num-shards ${NUM_SHARDS}
+        --num-shards ${NUM_SHARDS} \
+        ${LIMIT_FLAG}
 
 echo "=== Shard ${SLURM_ARRAY_TASK_ID} done ==="
