@@ -1,0 +1,20 @@
+# Text ingestion (Perseus TEI XML)
+lxml
+tqdm
+
+# Environment
+python-dotenv
+
+# Context-Oriented Translation
+requests
+pyyaml
+
+# Vector RAG (FAISS + embeddings)
+faiss-cpu
+sentence-transformers
+
+# Neo4j graph (Phase 2+)
+neo4j
+
+# Evaluation
+openai

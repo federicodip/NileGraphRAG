@@ -1,0 +1,23 @@
+# Data (large, gitignored — symlinked on cluster)
+data/
+logs/
+
+# FAISS index
+faiss_index/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

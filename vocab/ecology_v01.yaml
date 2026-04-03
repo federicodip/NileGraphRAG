@@ -1,0 +1,145 @@
+# Ancient Ecology Vocabulary v0.1
+# Controlled vocabulary for evidence-graded annotation of
+# environmental and infrastructural claims in ancient texts.
+#
+# Structure: domain > category > term
+# Each term has an id (stable, never reused), label, and description.
+# The id is used as the canonical reference in annotations and graph nodes.
+
+version: "0.1"
+description: >
+  Label set for extraction/classification of ecological and infrastructural
+  knowledge in ancient Nile Valley texts (500 BCE - 300 CE). Designed to
+  function as both the ML label set and a durable semantic layer for
+  linked-data interoperability.
+
+domains:
+
+  hydraulic_features:
+    description: "Physical water infrastructure attested or inferred"
+    terms:
+      - id: hf.canal
+        label: Canal
+        description: "Artificial waterway for irrigation or transport"
+      - id: hf.dike
+        label: Dike / Embankment
+        description: "Raised earth structure for flood control"
+      - id: hf.basin
+        label: Flood basin
+        description: "Enclosed area for controlled inundation"
+      - id: hf.nilometer
+        label: Nilometer
+        description: "Structure for measuring Nile flood levels"
+      - id: hf.well
+        label: Well
+        description: "Vertical shaft for groundwater access"
+      - id: hf.cistern
+        label: Cistern
+        description: "Constructed water storage facility"
+      - id: hf.harbor
+        label: Harbor / Port
+        description: "Waterfront infrastructure for vessels"
+      - id: hf.sluice
+        label: Sluice gate
+        description: "Controllable water passage in a canal or dike"
+      - id: hf.shaduf
+        label: Shaduf / Water-lifting device
+        description: "Mechanical device for raising water"
+
+  hydrological_phenomena:
+    description: "Natural water events and processes"
+    terms:
+      - id: hp.inundation
+        label: Inundation
+        description: "Annual Nile flood event"
+      - id: hp.low_water
+        label: Low water year
+        description: "Below-normal Nile flood, potential famine trigger"
+      - id: hp.high_flood
+        label: Excessive flood
+        description: "Destructively high Nile flood"
+      - id: hp.flood_anomaly
+        label: Flood anomaly
+        description: "Unusual flood timing, pattern, or magnitude"
+      - id: hp.siltation
+        label: Siltation
+        description: "Sediment accumulation in channels or basins"
+      - id: hp.salinization
+        label: Salinization
+        description: "Salt buildup in soil or water"
+      - id: hp.drought
+        label: Drought
+        description: "Extended period of insufficient water"
+
+  management_practices:
+    description: "Human actions related to water infrastructure"
+    terms:
+      - id: mp.irrigation
+        label: Irrigation scheduling
+        description: "Planned distribution of water to fields"
+      - id: mp.dredging
+        label: Dredging
+        description: "Removal of sediment from waterways"
+      - id: mp.embankment_repair
+        label: Embankment repair
+        description: "Maintenance or reconstruction of dikes"
+      - id: mp.canal_clearance
+        label: Canal clearance
+        description: "Cleaning or reopening of canals"
+      - id: mp.water_distribution
+        label: Water distribution
+        description: "Allocation of water among users or regions"
+      - id: mp.corvee_labor
+        label: Corvee labor
+        description: "Compulsory labor for infrastructure maintenance"
+      - id: mp.tax_remission
+        label: Tax remission (flood-related)
+        description: "Tax reduction linked to flood failure or damage"
+
+  interpretive_framings:
+    description: >
+      Rhetorical or explanatory frameworks through which sources
+      present environmental events. These are properties of the
+      discourse, not of the physical world.
+    terms:
+      - id: if.divine_agency
+        label: Divine agency
+        description: "Event attributed to gods or divine will"
+      - id: if.mismanagement
+        label: Administrative mismanagement
+        description: "Event framed as result of human failure"
+      - id: if.natural_cycle
+        label: Natural cycle
+        description: "Event presented as regular natural occurrence"
+      - id: if.moral_exemplum
+        label: Moral exemplum
+        description: "Event used as moral lesson or warning"
+      - id: if.prodigy
+        label: Prodigy / Omen
+        description: "Event framed as portent or supernatural sign"
+      - id: if.royal_beneficence
+        label: Royal beneficence
+        description: "Infrastructure framed as ruler's gift or achievement"
+
+evidence_layers:
+  description: >
+    Every annotation is assigned exactly one evidence layer.
+    This keeps attestations, inferences, and framings analytically distinct.
+  layers:
+    - id: attestation
+      label: Attestation
+      description: >
+        What the passage directly says. Anchored to specific text,
+        with stable pointers (CTS/TEI refs) and provenance metadata.
+    - id: inference
+      label: Inference
+      description: >
+        Hypothesis derived from one or more attestations, whether
+        proposed by scholars or suggested by computational models.
+        Explicitly marked as non-direct observation.
+    - id: framing
+      label: Framing
+      description: >
+        The rhetorical or explanatory grammar of the passage.
+        Stored as interpretive metadata about the attestation,
+        not as a property of the physical world.
