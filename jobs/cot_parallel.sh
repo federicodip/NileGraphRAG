@@ -38,13 +38,18 @@ CTR_OLLAMA=~/scratch/graphRAG/containers/ollama.sif
 CTR_APP=/scratch/fdipas/tellusgraph/tellusgraph.sif
 MODELS_DIR=/scratch/fdipas/graphRAG/ollama
 
-echo "=== Shard ${SLURM_ARRAY_TASK_ID}/${NUM_SHARDS} | Model: ${COT_MODEL} ==="
+# Each shard gets its own Ollama port to avoid collisions on shared nodes
+OLLAMA_PORT=$((11434 + SLURM_ARRAY_TASK_ID))
 
-echo "=== Starting Ollama server ==="
+echo "=== Shard ${SLURM_ARRAY_TASK_ID}/${NUM_SHARDS} | Model: ${COT_MODEL} | Port: ${OLLAMA_PORT} ==="
+
+echo "=== Starting Ollama server on port ${OLLAMA_PORT} ==="
 HTTPS_PROXY=http://10.129.62.115:3128 \
     OLLAMA_MAX_LOADED_MODELS=1 \
+    OLLAMA_HOST=0.0.0.0:${OLLAMA_PORT} \
     apptainer exec --nv \
     --env OLLAMA_MODELS=$MODELS_DIR \
+    --env OLLAMA_HOST=0.0.0.0:${OLLAMA_PORT} \
     --env HTTPS_PROXY=http://10.129.62.115:3128 \
     --env NO_PROXY=localhost,127.0.0.1 \
     $CTR_OLLAMA ollama serve &
@@ -55,6 +60,7 @@ apptainer exec \
     --env NO_PROXY=localhost,127.0.0.1 \
     --env no_proxy=localhost,127.0.0.1 \
     --env COT_MODEL=$COT_MODEL \
+    --env OLLAMA_BASE_URL=http://localhost:${OLLAMA_PORT} \
     $CTR_APP python translate/cot.py \
         --input /scratch/fdipas/tellusgraph/data/processed/rag/chunks.jsonl \
         --output data/cot_full.jsonl \
