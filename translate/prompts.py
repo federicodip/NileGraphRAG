@@ -64,15 +64,9 @@ Produce your response as JSON with these fields:
   "vocab_terms": ["<term_id>", ...],
   "evidence_layer": "<attestation | inference | framing>",
   "confidence": <0.0-1.0>,
-  "rationale": "<1-2 sentences explaining your classification choices>",
-  "entities": [
-    {{"text": "<name as it appears in your translation>", "type": "<PERSON | PLACE | GROUP | DATE>"}},
-    ...
-  ]
+  "rationale": "<1-2 sentences explaining your classification choices>"
 }}
 ```
-
-For `entities`, extract all named people, places, groups/peoples, and specific dates mentioned in your translation. Use the name exactly as you wrote it in `cot_english`.
 
 For `vocab_terms`, use ONLY ids from this list (leave empty if none apply):
 {vocab_term_ids}
