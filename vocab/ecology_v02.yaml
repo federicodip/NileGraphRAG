@@ -1,0 +1,320 @@
+# Ancient Ecology Vocabulary v0.2
+# Controlled vocabulary for evidence-graded annotation of
+# environmental and infrastructural claims in ancient texts.
+#
+# v0.2 changes from v0.1:
+#   - Added Greek/Latin/Egyptian source terms (from Trismegistos GEO)
+#   - Added Pleiades URIs where available (for linked-data interoperability)
+#   - New domain: water_bodies (natural features, split from hydraulic_features)
+#   - New domain: personnel (water-management roles, from Abdelwahed & Shehata 2022)
+#   - Expanded hydraulic_features with Trismegistos infrastructure terms
+#   - Expanded management_practices with irrigation technology terms
+#   - All v0.1 IDs preserved (IDs are stable, never reused)
+#
+# Sources:
+#   - Pleiades place types: pleiades.stoa.org/vocabularies/place-types
+#   - Trismegistos GEO status: trismegistos.org/geo/about_status.php
+#   - Abdelwahed & Shehata, "Nile Water Management" (Rosetta 27, 2022)
+#   - Bonneau, Le régime administratif de l'eau du Nil (Brill, 1993) [to be added]
+
+version: "0.2"
+description: >
+  Label set for extraction/classification of ecological and infrastructural
+  knowledge in ancient Nile Valley texts (500 BCE - 300 CE). Functions as
+  both the ML label set and a durable semantic layer for linked-data
+  interoperability. Greek/Latin/Egyptian source terms enable matching
+  against original-language passages.
+
+domains:
+
+  hydraulic_features:
+    description: "Physical water infrastructure, built or modified by humans"
+    terms:
+      # --- Retained from v0.1 ---
+      - id: hf.canal
+        label: Canal
+        description: "Artificial navigable waterway for irrigation or transport"
+        source_terms: {grc: [dioryx, plote, oreine], lat: [fossa], egy: [heni, mou]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/canal
+      - id: hf.dike
+        label: Dike / Embankment
+        description: "Raised earth structure for flood control or water retention"
+        source_terms: {grc: [choma, perichoma, gephyra], egy: [teni, ouhemet]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/dam
+      - id: hf.basin
+        label: Flood basin
+        description: "Enclosed area for controlled inundation (basin irrigation)"
+        source_terms: {grc: [lakkos]}
+      - id: hf.nilometer
+        label: Nilometer
+        description: "Structure for measuring Nile flood levels"
+        source_terms: {grc: [nilometre, nilometron]}
+      - id: hf.well
+        label: Well
+        description: "Vertical shaft for groundwater access"
+        source_terms: {grc: [phrear, krene], lat: [fons]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/well
+      - id: hf.cistern
+        label: Cistern
+        description: "Constructed water storage facility"
+        source_terms: {grc: [hydreuma, lakkos]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/cistern
+      - id: hf.harbor
+        label: Harbor / Port
+        description: "Waterfront infrastructure for vessels"
+        source_terms: {grc: [limen, hormos, oryktos], lat: [portus]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/harbor
+      - id: hf.sluice
+        label: Sluice gate
+        description: "Controllable water passage in a canal or dike"
+        source_terms: {grc: [thyrai, emblema, hexathyros]}
+      - id: hf.shaduf
+        label: Shaduf / Water-lifting device
+        description: "Mechanical device for raising water (shaduf, saqiya, Archimedean screw)"
+        source_terms: {grc: [mechane, organon]}
+      # --- New in v0.2 ---
+      - id: hf.aqueduct
+        label: Aqueduct
+        description: "Conduit for transporting water over distance, often elevated"
+        source_terms: {grc: [hydragogos, hydregos], lat: [aquaeductus]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/aqueduct
+      - id: hf.reservoir
+        label: Reservoir
+        description: "Artificial storage for collected water"
+        source_terms: {grc: [hydreuma, hypodocheion], lat: [castellum]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/reservoir
+      - id: hf.channel
+        label: Channel (artificial)
+        description: "Constructed channel for directing water flow"
+        source_terms: {grc: [solen, kremaste, rheithron]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/channel-artificial
+      - id: hf.ditch
+        label: Ditch
+        description: "Narrow excavation for drainage or irrigation"
+        source_terms: {lat: [fossa]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/ditch
+      - id: hf.fountain
+        label: Fountain / Spring installation
+        description: "Built feature providing access to water from a spring"
+        source_terms: {grc: [krene, pege], lat: [fons]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/fountain
+      - id: hf.bridge
+        label: Bridge
+        description: "Structure spanning a waterway"
+        source_terms: {grc: [gephyra], lat: [pons]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/bridge
+      - id: hf.bath
+        label: Bath complex
+        description: "Public or private bathing facility"
+        source_terms: {grc: [balaneion], lat: [thermae, balneum]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/bath
+
+  water_bodies:
+    description: "Natural water features and landforms (not human-built)"
+    terms:
+      - id: wb.river
+        label: River / Stream
+        description: "Natural flowing watercourse"
+        source_terms: {grc: [potamos, cheimarrous], lat: [flumen, fluvius, amnis, rivus], egy: [ir, mou]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/river
+      - id: wb.lake
+        label: Lake
+        description: "Inland body of standing water"
+        source_terms: {grc: [limne], lat: [lacus], egy: [shi]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/lake
+      - id: wb.spring
+        label: Natural spring
+        description: "Water issuing naturally from rock or soil"
+        source_terms: {grc: [pege, krene]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/spring
+      - id: wb.marsh
+        label: Marsh / Wetland
+        description: "Area saturated with water, supporting distinct ecology"
+        source_terms: {grc: [barathra, drymos]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/marsh-wetland
+      - id: wb.nile_mouth
+        label: Nile mouth / Delta branch
+        description: "Point where a Nile branch enters the sea"
+        source_terms: {grc: [stoma, stomion, ostium, pseudostomon]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/mouth
+      - id: wb.delta
+        label: Delta
+        description: "Alluvial fan at a river mouth"
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/delta
+      - id: wb.wadi
+        label: Wadi / Dry riverbed
+        description: "Seasonal watercourse, dry most of the year"
+        source_terms: {grc: [pharanx], ara: [wadi]}
+      - id: wb.cataract
+        label: Cataract / Rapids
+        description: "Section of river with shallow, turbulent water over rocks"
+        source_terms: {egy: [mou]}
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/rapid
+      - id: wb.oasis
+        label: Oasis
+        description: "Fertile area in desert sustained by groundwater"
+        pleiades: https://pleiades.stoa.org/vocabularies/place-types/oasis
+      - id: wb.nesos
+        label: Nesos (unflooded land)
+        description: "Land not reached by the Nile inundation"
+        source_terms: {grc: [nesos, ge_epeiros]}
+
+  hydrological_phenomena:
+    description: "Natural water events and processes"
+    terms:
+      # --- Retained from v0.1 ---
+      - id: hp.inundation
+        label: Inundation
+        description: "Annual Nile flood event"
+      - id: hp.low_water
+        label: Low water year
+        description: "Below-normal Nile flood, potential famine trigger"
+      - id: hp.high_flood
+        label: Excessive flood
+        description: "Destructively high Nile flood"
+      - id: hp.flood_anomaly
+        label: Flood anomaly
+        description: "Unusual flood timing, pattern, or magnitude"
+      - id: hp.siltation
+        label: Siltation
+        description: "Sediment accumulation in channels or basins"
+      - id: hp.salinization
+        label: Salinization
+        description: "Salt buildup in soil or water"
+      - id: hp.drought
+        label: Drought
+        description: "Extended period of insufficient water"
+      # --- New in v0.2 ---
+      - id: hp.erosion
+        label: Erosion
+        description: "Loss of soil or bank material due to water action"
+      - id: hp.breach
+        label: Dike breach
+        description: "Break or failure in an embankment, causing uncontrolled flooding"
+        source_terms: {grc: [ekregma]}
+
+  management_practices:
+    description: "Human actions related to water infrastructure and land"
+    terms:
+      # --- Retained from v0.1 ---
+      - id: mp.irrigation
+        label: Irrigation
+        description: "Planned distribution of water to agricultural fields"
+      - id: mp.dredging
+        label: Dredging
+        description: "Removal of sediment from waterways"
+      - id: mp.embankment_repair
+        label: Embankment repair
+        description: "Maintenance or reconstruction of dikes"
+      - id: mp.canal_clearance
+        label: Canal clearance
+        description: "Cleaning or reopening of canals"
+      - id: mp.water_distribution
+        label: Water distribution
+        description: "Allocation of water among users or regions"
+      - id: mp.corvee_labor
+        label: Corvee labor
+        description: "Compulsory labor for infrastructure maintenance"
+        source_terms: {grc: [chomatikon]}
+      - id: mp.tax_remission
+        label: Tax remission (flood-related)
+        description: "Tax reduction linked to flood failure or damage"
+      # --- New in v0.2 ---
+      - id: mp.land_reclamation
+        label: Land reclamation
+        description: "Converting desert or marsh into cultivable land through drainage or irrigation"
+      - id: mp.flood_measurement
+        label: Flood measurement
+        description: "Observation and recording of Nile flood levels"
+      - id: mp.water_lifting
+        label: Water lifting
+        description: "Raising water from a lower to higher level using mechanical devices"
+        source_terms: {grc: [mechane, organon]}
+      - id: mp.navigation
+        label: Canal navigation
+        description: "Use of waterways for transport of goods or persons"
+
+  personnel:
+    description: >
+      Water-management roles attested in administrative documents.
+      Source: Abdelwahed & Shehata (Rosetta 27, 2022); Bonneau (1993) Part 2.
+    terms:
+      - id: pe.hydrophylax
+        label: Water guard
+        description: "Official responsible for protecting and distributing water"
+        source_terms: {grc: [hydrophylax]}
+      - id: pe.aigialophylax
+        label: Shore guard
+        description: "Official guarding riverbanks or lakeshores"
+        source_terms: {grc: [aigialophylax]}
+      - id: pe.potamophylax
+        label: River guard
+        description: "Official overseeing a section of the Nile or a canal"
+        source_terms: {grc: [potamophylax]}
+      - id: pe.dike_inspector
+        label: Dike inspector
+        description: "Official inspecting and maintaining embankments"
+        source_terms: {grc: [chomatepistates]}
+      - id: pe.irrigation_officer
+        label: Irrigation officer
+        description: "Official managing water allocation for agriculture"
+      - id: pe.diver
+        label: Diver / Canal worker
+        description: "Laborer working underwater for canal maintenance"
+        source_terms: {grc: [kolymbet]}
+
+  interpretive_framings:
+    description: >
+      Rhetorical or explanatory frameworks through which sources
+      present environmental events. These are properties of the
+      discourse, not of the physical world.
+    terms:
+      # --- Retained from v0.1 ---
+      - id: if.divine_agency
+        label: Divine agency
+        description: "Event attributed to gods or divine will"
+      - id: if.mismanagement
+        label: Administrative mismanagement
+        description: "Event framed as result of human failure"
+      - id: if.natural_cycle
+        label: Natural cycle
+        description: "Event presented as regular natural occurrence"
+      - id: if.moral_exemplum
+        label: Moral exemplum
+        description: "Event used as moral lesson or warning"
+      - id: if.prodigy
+        label: Prodigy / Omen
+        description: "Event framed as portent or supernatural sign"
+      - id: if.royal_beneficence
+        label: Royal beneficence
+        description: "Infrastructure framed as ruler's gift or achievement"
+      # --- New in v0.2 ---
+      - id: if.famine_narrative
+        label: Famine narrative
+        description: "Event framed within a conventional famine or scarcity topos"
+      - id: if.abundance_topos
+        label: Abundance topos
+        description: "Event framed as evidence of prosperity, fertile land, or divine favor"
+
+evidence_layers:
+  description: >
+    Every annotation is assigned exactly one evidence layer.
+    This keeps attestations, inferences, and framings analytically distinct.
+  layers:
+    - id: attestation
+      label: Attestation
+      description: >
+        What the passage directly says. Anchored to specific text,
+        with stable pointers (CTS/TEI refs) and provenance metadata.
+    - id: inference
+      label: Inference
+      description: >
+        Hypothesis derived from one or more attestations, whether
+        proposed by scholars or suggested by computational models.
+        Explicitly marked as non-direct observation.
+    - id: framing
+      label: Framing
+      description: >
+        The rhetorical or explanatory grammar of the passage.
+        Stored as interpretive metadata about the attestation,
+        not as a property of the physical world.
