@@ -1,6 +1,8 @@
 # Data (large, gitignored — symlinked on cluster)
 data/*
 !data/test_sample_10.jsonl
+!data/validation_sample_500.jsonl
+!data/eval_questions.jsonl
 logs/
 
 # FAISS index
