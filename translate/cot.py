@@ -133,8 +133,15 @@ def run_pipeline(
     limit: int = None,
     resume: bool = True,
     batch_size: int = 50,
+    shard: int = None,
+    num_shards: int = None,
 ):
-    """Run COT on all chunks, saving incrementally."""
+    """Run COT on all chunks, saving incrementally.
+
+    If shard/num_shards are set, only process chunks where
+    chunk_index % num_shards == shard. Each shard writes to its
+    own output file (output_path with _shardN suffix).
+    """
 
     # Load vocab
     vocab_ids = load_vocab_term_ids(vocab_path)
@@ -144,6 +151,16 @@ def run_pipeline(
     with open(input_path, encoding="utf-8") as f:
         chunks = [json.loads(line) for line in f]
     print(f"Loaded {len(chunks)} chunks from {input_path}")
+
+    # Sharding: select only this shard's chunks
+    if shard is not None and num_shards is not None:
+        base, ext = os.path.splitext(output_path)
+        output_path = f"{base}_shard{shard:02d}{ext}"
+        all_indices = list(range(len(chunks)))
+        shard_indices = set(i for i in all_indices if i % num_shards == shard)
+        print(f"Shard {shard}/{num_shards}: {len(shard_indices)} chunks → {output_path}")
+    else:
+        shard_indices = None  # process all
 
     # Resume: find already-processed chunk IDs
     done_ids = set()
@@ -157,6 +174,8 @@ def run_pipeline(
     # Filter to remaining
     to_process = []
     for i, c in enumerate(chunks):
+        if shard_indices is not None and i not in shard_indices:
+            continue
         cid = c.get("chunk_id", c.get("id", str(i)))
         if cid not in done_ids:
             to_process.append((i, c))
@@ -256,6 +275,18 @@ if __name__ == "__main__":
         default=50,
         help="Save checkpoint every N chunks",
     )
+    parser.add_argument(
+        "--shard",
+        type=int,
+        default=None,
+        help="Shard index (0-based). Use with --num-shards for parallel jobs.",
+    )
+    parser.add_argument(
+        "--num-shards",
+        type=int,
+        default=None,
+        help="Total number of shards. Each shard writes to its own output file.",
+    )
     args = parser.parse_args()
 
     # Ensure output directory exists
@@ -268,4 +299,6 @@ if __name__ == "__main__":
         limit=args.limit,
         resume=not args.no_resume,
         batch_size=args.batch_size,
+        shard=args.shard,
+        num_shards=args.num_shards,
     )
