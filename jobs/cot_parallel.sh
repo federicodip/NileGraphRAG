@@ -10,6 +10,7 @@
 #SBATCH --output=logs/cot-shard%a-%j.out
 #SBATCH --error=logs/cot-shard%a-%j.err
 #SBATCH --array=0-7
+#SBATCH --exclusive
 set -e
 
 # ---------------------------------------------------------------
