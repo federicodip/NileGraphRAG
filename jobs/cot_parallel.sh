@@ -10,7 +10,6 @@
 #SBATCH --output=logs/cot-shard%a-%j.out
 #SBATCH --error=logs/cot-shard%a-%j.err
 #SBATCH --array=0-7
-#SBATCH --exclusive
 set -e
 
 # ---------------------------------------------------------------
@@ -25,7 +24,7 @@ set -e
 # ---------------------------------------------------------------
 
 NUM_SHARDS=8
-COT_MODEL="gemma4:31b"
+COT_MODEL="gemma3:27b"
 LIMIT_FLAG="${COT_LIMIT:+--limit $COT_LIMIT}"
 
 unset HTTP_PROXY
