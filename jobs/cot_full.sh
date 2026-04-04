@@ -25,7 +25,7 @@ MODELS_DIR=/scratch/fdipas/graphRAG/ollama
 # --- Choose model ---
 # gemma3:12b  = ~3s/chunk → ~9600 chunks per 8h job → ~19 jobs total
 # gemma3:27b  = ~7s/chunk → ~4100 chunks per 8h job → ~44 jobs total
-COT_MODEL="gemma3:27b"
+COT_MODEL="gemma4:31b"
 
 echo "=== Starting Ollama server ==="
 HTTPS_PROXY=http://10.129.62.115:3128 \

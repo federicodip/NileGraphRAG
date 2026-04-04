@@ -36,14 +36,14 @@ apptainer exec \
     --env OLLAMA_MODELS=$MODELS_DIR \
     --env NO_PROXY=localhost,127.0.0.1 \
     --env no_proxy=localhost,127.0.0.1 \
-    $CTR_OLLAMA ollama pull gemma3:27b
+    $CTR_OLLAMA ollama pull gemma4:31b
 
 echo "=== Pulling qwen3:32b ==="
 apptainer exec \
     --env OLLAMA_MODELS=$MODELS_DIR \
     --env NO_PROXY=localhost,127.0.0.1 \
     --env no_proxy=localhost,127.0.0.1 \
-    $CTR_OLLAMA ollama pull qwen3:32b
+    $CTR_OLLAMA ollama pull gemma4:26b
 
 echo "=== Listing available models ==="
 apptainer exec \
